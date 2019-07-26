@@ -1281,3 +1281,55 @@ int main()
     return 0;
 }
 ```
+### NTT
+```c++
+const int N=1e6+5;
+struct NTT{
+	static const int G=3,P=1004535809;//P=C*2^k+1
+	//w是系数w[0][k]是w_{n}^{k},w[1][k]是w_{n}^{-k}
+	// rev是用于将每个位置的系数和与它下标二进制下相反位置的系数交换 
+	int n,na,nb,w[2][N],rev[N]; 
+	ll qpow(ll x,ll n){
+		ll res=1;
+		while(n>0){
+			if(n&1)res=res*x%P;
+			x=x*x%P;
+			n>>=1;
+		}
+		return res;
+	}
+	//f=0 => DFT f=1 => IDFT 
+	void FFT(int *a,int f){
+		rep(i,0,n)if(i<rev[i])swap(a[i],a[rev[i]]);
+		for(int i=1;i<n;i<<=1)
+			for(int j=0,t=n/(i<<1);j<n;j+=i<<1)
+				for(int k=0,l=0,x,y;k<i;k++,l+=t){
+					x=(ll)w[f][l]*a[j+k+i]%P;
+					y=a[j+k];
+					a[j+k]=(y+x)%P;
+					a[j+k+i]=(y-x+P)%P;
+				}
+		if(f)for(int i=0,x=qpow(n,P-2);i<n;i++)a[i]=(ll)a[i]*x%P;
+	}
+	void work(){
+		int d=__builtin_ctz(n);
+		//int d=0,while((1<<d)<n)d++;
+		w[0][0]=w[1][0]=1;
+		for(int i=1,x=qpow(G,(P-1)/n),y=qpow(x,P-2);i<n;i++){
+			rev[i] = (rev[i>>1]>>1)|( (i&1) << (d-1));
+			w[0][i]=(ll)x*w[0][i-1]%P;
+			w[1][i]=(ll)y*w[1][i-1]%P;
+		}
+	}
+	void doit(int *a,int *b,int na,int nb){ //[0,na)
+		for(n=1;n<na+nb-1;n<<=1);
+		rep(i,na,n)a[i]=0;
+		rep(i,nb,n)b[i]=0;
+		work();
+		FFT(a,0);
+		FFT(b,0);
+		rep(i,0,n)a[i]=(ll)a[i]*b[i]%P;
+		FFT(a,1);
+	}
+}ntt;
+```
