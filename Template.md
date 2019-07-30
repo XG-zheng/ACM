@@ -1157,6 +1157,40 @@ struct LineBase{
 	}
 }LB;
 ```
+//线性基求交 求区间线性基求交用线段树维护。
+//从低到高考虑线性基b中的元素，同时维护a和b已经插入的向量构成的线性基，并记录这个线性基中每个元素由a贡献的部分cont
+//插入某个元素时，如果不能被当前线性基已有元素表示，就加入线性基，然后cont加入a线性基贡献的部分
+//如果能被表示，那么就将a的贡献加入到合并后的线性基res。
+```c++
+LineBase merge(LineBase a,LineBase b){
+	LineBase res,cont;
+	rep(i,0,32+1)
+		cont.d[i]=a.d[i];
+	for(int i=0;i<33;++i){
+		if(b.d[i]){
+			ll ctr=0,x=b.d[i];
+			for(int j=32;j>=0;--j){
+				if((x>>j)&1ll){
+					if(!a.d[j]){
+						a.d[j]=x;
+						cont.d[j]=ctr;	
+						break;
+					}
+					else{
+						x^=a.d[j];
+						ctr^=cont.d[j];
+						if(x==0){
+							res.d[i]=ctr;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+	return res;
+}
+```
 
 ### FFT高精度
 - [FFT](https://zhuanlan.zhihu.com/p/31584464)
