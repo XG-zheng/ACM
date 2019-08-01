@@ -1261,10 +1261,10 @@ struct LineBase{
 	}
 }LB;
 ```
-//线性基求交 求区间线性基求交用线段树维护。
-//从低到高考虑线性基b中的元素，同时维护a和b已经插入的向量构成的线性基，并记录这个线性基中每个元素由a贡献的部分cont
-//插入某个元素时，如果不能被当前线性基已有元素表示，就加入线性基，然后cont加入a线性基贡献的部分
-//如果能被表示，那么就将a的贡献加入到合并后的线性基res。
+> 线性基求交 求区间线性基求交用线段树维护。
+> 从低到高考虑线性基b中的元素，同时维护a和b已经插入的向量构成的线性基，并记录这个线性基中每个元素由a贡献的部分cont。
+> 插入某个元素时，如果不能被当前线性基已有元素表示，就加入线性基，然后cont就加入a线性基贡献的部分ctr,
+> 如果能被表示，那么就将a的贡献加入到要求的合并后的线性基res。
 ```c++
 LineBase merge(LineBase a,LineBase b){
 	LineBase res,cont;
@@ -1436,38 +1436,3 @@ struct NTT{
 		}
 		return res;
 	}
-	//f=0 => DFT f=1 => IDFT 
-	void FFT(int *a,int f){
-		rep(i,0,n)if(i<rev[i])swap(a[i],a[rev[i]]);
-		for(int i=1;i<n;i<<=1)
-			for(int j=0,t=n/(i<<1);j<n;j+=i<<1)
-				for(int k=0,l=0,x,y;k<i;k++,l+=t){
-					x=(ll)w[f][l]*a[j+k+i]%P;
-					y=a[j+k];
-					a[j+k]=(y+x)%P;
-					a[j+k+i]=(y-x+P)%P;
-				}
-		if(f)for(int i=0,x=qpow(n,P-2);i<n;i++)a[i]=(ll)a[i]*x%P;
-	}
-	void work(){
-		int d=__builtin_ctz(n);
-		//int d=0,while((1<<d)<n)d++;
-		w[0][0]=w[1][0]=1;
-		for(int i=1,x=qpow(G,(P-1)/n),y=qpow(x,P-2);i<n;i++){
-			rev[i] = (rev[i>>1]>>1)|( (i&1) << (d-1));
-			w[0][i]=(ll)x*w[0][i-1]%P;
-			w[1][i]=(ll)y*w[1][i-1]%P;
-		}
-	}
-	void doit(int *a,int *b,int na,int nb){ //[0,na)
-		for(n=1;n<na+nb-1;n<<=1);
-		rep(i,na,n)a[i]=0;
-		rep(i,nb,n)b[i]=0;
-		work();
-		FFT(a,0);
-		FFT(b,0);
-		rep(i,0,n)a[i]=(ll)a[i]*b[i]%P;
-		FFT(a,1);
-	}
-}ntt;
-```
