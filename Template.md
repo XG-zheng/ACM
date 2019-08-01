@@ -102,6 +102,110 @@ int search(){
     return  res;
 }
 ```
+##### 最大独立集并输出方案
+> 先求最大匹配，每一对匹配的点只能选取左边或者右边，不在匹配上的点则要全选。
+> 则从不在匹配上的左半图点开始搜索，能走到的左半图的点都可选，右半图走到的则不可选。
+> 存在某对匹配左右都访问不到，那么默认选取了左边的点。
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef pair<int,int>pii;
+typedef vector<int>vi;
+ 
+#define rep(i,a,b) for(int i=(a);i<(b);i++)
+#define fi first
+#define se second
+#define de(x) cout<<#x<<"="<<x<<endl;
+#define dd(x) cout<<#x<<"="<<x<<" " ;
+#define pb(x) push_back(x)
+#define per(i,a,b) for(int i=(b)-1;i>=(a);--i)
+const int N=7e3+5;
+int n,c[N]; //将图染色 左边染色为0，右边为1
+ll a[N];
+vi G[N];
+int vis[N],match[N]; 
+bool l[N],r[N]; //标记左边和右边是否被走到
+bool dfs(int x){
+    l[x]=true; 
+    for(auto v:G[x]){
+        int u=match[v];
+        if(r[v])continue;
+        r[v]=true;
+		if(u==-1||dfs(u)){
+            match[v]=x;
+            match[x]=v;
+            return true;
+        }
+    }
+    return false;
+}
+int search(){
+    int res=0;
+    memset(match,-1,sizeof(match));
+    for(int i=1;i<=n;++i){
+            if(c[i]!=0)continue;
+            memset(r,0, sizeof(r));
+            memset(l,0, sizeof(l));
+            if(dfs(i))res++;
+          
+    }
+    return  res;
+}
+void color(int u){
+	vis[u]=1;
+	for(auto v:G[u]){
+		if(!vis[v]){
+			c[v]=c[u]^1;
+			color(v);
+		}
+	}
+}
+void work(){
+	memset(l,0,sizeof(l));
+	memset(r,0,sizeof(r));
+	
+	for(int i=1;i<=n;++i){
+		if(c[i]==0 && match[i]==-1 ){  
+			dfs(i);
+		} 
+	}
+	for(int i=1;i<=n;++i){
+		if((c[i]==0 && l[i]) || (c[i]==1 && !r[i])){
+			printf("%d ",a[i]);
+		}
+	}
+}
+int main()
+{
+ 
+     
+    scanf("%d",&n);
+    rep(i,1,n+1)
+        scanf("%lld",&a[i]);
+    rep(i,1,n+1){
+        rep(j,i+1,n+1){
+            ll t=a[i]^a[j];
+            if(__builtin_popcount(t)==1){
+            	G[i].pb(j);
+            	G[j].pb(i); 
+			}
+        }
+    }
+    memset(vis,0,sizeof(vis));
+    memset(c,-1,sizeof(c));
+    for(int i=1;i<=n;++i){
+    	if(c[i]==-1){
+    		c[i]=0;
+    		color(i);
+		}
+	}
+    int ans=search();
+    printf("%d\n",n-ans);
+    work();
+    return 0;
+}
+```
 
 ### 二位树状数组求动态二维矩阵和
 ```c++
