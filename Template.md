@@ -1458,7 +1458,7 @@ ll BSGS(){
 	for(int i=0;i<=m;++i){
 		ll t=qpow(B,i);
 		t=t*n%p;
-		if(mp.find(t)==mp.end())mp[t]=i;
+		mp[t]=i;
 	}
 	for(ll i=1;i<=m;++i){
 		ll t=qpow(B,i*m);
