@@ -1436,3 +1436,35 @@ struct NTT{
 		}
 		return res;
 	}
+```
+### BSGS
+
+```
+unordered_map<ll,ll> mp; 
+ll p,B,n,m;  
+// p是模数 求解B^x=n%p的最小x，m=sqrt(p)+1
+// x可以分解成x=i*m-j,转化为B^(i*m)=n*B^j%p，B和p要互质。
+ll qpow(ll x,ll n){
+	ll res=1;
+	while(n>0){
+		if(n&1)res=res*x%p;
+		n>>=1;
+		x=x*x%p; 
+	}
+	return res;
+}
+ll BSGS(){
+	m=sqrt(p)+1;
+	for(int i=0;i<=m;++i){
+		ll t=qpow(B,i);
+		t=t*n%p;
+		if(mp.find(t)==mp.end())mp[t]=i;
+	}
+	for(ll i=1;i<=m;++i){
+		ll t=qpow(B,i*m);
+		if(mp.find(t)!=mp.end())return i*m-mp[t];
+	}
+	return -1;
+}
+
+```
