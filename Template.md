@@ -1468,3 +1468,26 @@ ll BSGS(){
 }
 
 ```
+
+### 可撤销并查集
+```c++
+struct node{
+	int x,y,rk;
+	node(int _x,int _y,int _r){
+		x=_x,y=_y,rk=_r;
+	}
+};
+vector<node> p[N];
+int F(int x){
+	while(x!=pre[x])x=pre[x];
+	return x;
+}
+void UN(int x,int y,int rt){
+	int fx=F(x),fy=F(y);
+	if(fx==fy)return ;
+	if(rk[fx]>rk[y])swap(fx,fy); 
+	p[rt].pb(node(fx,fy,rk[fy])); //记录信息，用于撤销pre[it.x]=it.x,rk[it.y]=it.rk;
+	if(rk[fx]==rk[fy])rk[fy]++;
+	pre[fx]=fy;
+}
+```
