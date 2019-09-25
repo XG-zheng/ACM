@@ -1,3 +1,4 @@
+//统计本质不同的字串，每个后缀贡献n-sa[i]+1-height[i] 
 const int N=2e5+5;
 struct SA{
 	//sa[i] 表示排名为i的后缀起始位置下标
