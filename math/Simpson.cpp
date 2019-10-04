@@ -1,9 +1,7 @@
 namespace Simpson {
 	const db eps = 1e-10; // 精度感觉一般要多设1e-3左右
-	inline db F(db x) { 
-		//return 1.0/s/s/s*(s-(max(s-x-wb,0.)+max(x-wa,0.)))*(s-(max(s-x-wb,0.)+max(x-wc,0.))); 
-		//return 1.0 /s/s/s *(min(x + wb, s) - max(x - wa, 0.))*(min(x + wb, s) - max(x - wc, 0.)) ; 
-	//	return 1.0/s/s/s *(x - max(x - w[p[0]], 0.)) *(min(x + w[p[1]], s) - x);
+	inline db F(db x) {
+		//F(x)=?
 	}
 	inline db simpson(db fa, db fb, db fc, db a, db c) {
 		return (fa + 4 * fb + fc) * (c - a) / 6;
