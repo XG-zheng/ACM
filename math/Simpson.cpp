@@ -1,4 +1,4 @@
-//二重积分Simpson 套Simpson ，外面一层积分[l,r]，可能需要切成几段，每段积分再累加，误差低.
+//二重积分Simpson 套Simpson ，积分[l,r]，可能需要切成几段，每段积分再累加，误差低.
 namespace Simpson {
 	const db eps = 1e-10; // 精度感觉一般要多设1e-3左右
 	inline db F(db x) {
