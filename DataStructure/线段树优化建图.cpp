@@ -7,7 +7,7 @@ struct SegGraph {
 	// p[i] 是原图点i在线段树上建出的图上对应的点 
 	int id[N][2], p[N], tim;
 	vector<pii> g[N];
-	void init() { rep(i, 0, tim) g[i].clear(); tim = 0; }
+	void init() { rep(i, 0, tim+1) g[i].clear(); tim = 0; }
 	void liu(int u, int v, int w) {  g[u].pb(mp(v, w)); }
 	void build(int l, int r, int rt) {
 		int *t = id[rt], *fa = id[rt / 2], mid = l + r >> 1;
