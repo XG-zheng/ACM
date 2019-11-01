@@ -43,3 +43,4 @@ struct Dinic{
         return flow;
     }
 };
+Dinic<int> t1;
