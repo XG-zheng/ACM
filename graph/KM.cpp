@@ -1,3 +1,5 @@
+// init!! , id starts from 0
+// n <= m
 template<class T>
 struct KM {
 	static const int N = 505;
