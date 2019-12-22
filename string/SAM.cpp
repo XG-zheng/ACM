@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //SAM统计子串出现数量 
+=======
+//SAM缁熻瀛愪覆鍑虹幇鏁伴噺 
+>>>>>>> 1789cf67cf6500ddf015f4a142eed1915a9384a0
 const int N=1e6+5;
 struct state {
 	int len, link;
@@ -6,7 +10,11 @@ struct state {
 };
 state st[N * 2];
 int sz, last;
+<<<<<<< HEAD
 int cnt[N*2]; //统计每个状态的子串出现次数 
+=======
+int cnt[N*2]; //缁熻姣忎釜鐘舵�佺殑瀛愪覆鍑虹幇娆℃暟 
+>>>>>>> 1789cf67cf6500ddf015f4a142eed1915a9384a0
 
 void sam_init() {
 	st[0].len = 0;
