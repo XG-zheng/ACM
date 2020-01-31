@@ -1,5 +1,5 @@
 struct segTree{
-	ll mx[N<<2],b[N<<2],add[N<<2],sum[N];
+	ll mx[N<<2],b[N<<2],add[N<<2],sum[N<<2];
 	void Build(int l ,int r,int rt){
 		add[rt] = 0;
 		if(l == r){ mx[rt] = sum[rt] = b[l];return;}
