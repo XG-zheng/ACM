@@ -1,9 +1,10 @@
+// number [0,n) !!!
 struct TwoSat {
 	static const int N = ::N << 1;
 	int dfn[N], low[N], id[N], st[N], _st, _, cc;
 	vi g[N];
 	int mark[N], n;
-	void init(int _n) { per(i, 0, (n = (_n + 2)<< 1)) g[i].clear(); }
+	void init(int _n) { per(i, 0, (n = _n<< 1)) g[i].clear(); }
 	int new_node() { rep(i, 0, 2) g[n++].clear(); return n / 2 - 1; }
 	/// optionals begin
 	void addedge(int a, int va, int b, int vb) { // va 选了 vb 必选  
