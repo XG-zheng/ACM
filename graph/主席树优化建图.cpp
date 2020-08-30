@@ -71,7 +71,7 @@ void upd(int l,int r,int pos,int &x,int y,int id){
 }
 //link u to (id in [1,x] &&  L<= w[i] <= R)
 void add(int x,int L,int R,int l,int r,int u){
-	if(x == 0 || T[x].sum == 0)return;
+	if(T[x].sum == 0)return;
 	if(L <= l && r <= R){
 		flow.link(u , x, inf);   //addedge  u ->[l,r]
 		return;
