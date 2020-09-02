@@ -1,7 +1,7 @@
 const int N=2e3+5;
 const int inf = 0x3f3f3f3f;
 vector<pii> g[N];
-int dp[N][20],pw[N];
+int dp[N][1025],pw[N];
 bool vis[N];
 queue<int> q;
 void spfa(int msk){
